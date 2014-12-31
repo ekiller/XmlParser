@@ -1,13 +1,9 @@
 package com.natiki.xmlparser;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
-import java.util.Comparator;
+
 import java.util.HashMap;
-import java.util.HashSet;
-import java.util.LinkedHashSet;
-import java.util.List;
-import java.util.TreeMap;
+
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -19,9 +15,14 @@ import android.app.ListActivity;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
+
 import android.view.View;
+
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.EditText;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
@@ -68,7 +69,7 @@ public class AndroidXMLParsingActivity extends ListActivity {
 
     private class GetXMLAsyncTask extends AsyncTask<Void, Void, String> {
         private ArrayList<HashMap<String, String>> menuItems = null;
-        private ArrayList<HashMap<String, String>> menuItemsSort = null;
+
         private XMLParser parser = null;
 
         public GetXMLAsyncTask() {
@@ -118,11 +119,41 @@ String tst = null;
 
 
 // Adding menuItems to ListView
-                ListAdapter adapter = new SimpleAdapter(getApplicationContext(), menuItems
+                ListAdapter adapter = new SimpleAdapter(AndroidXMLParsingActivity.this, menuItems
                         , R.layout.list_item, new String[] { KEY_NAME, KEY_ID, KEY_LAT }
                         , new int[]{R.id.name, R.id.ID, R.id.lat});
 
+
+                // updating listview
                 setListAdapter(adapter);
+
+                EditText inputSearch = (EditText) findViewById(R.id.search);
+
+                inputSearch.addTextChangedListener(new TextWatcher() {
+
+                    @Override
+                    public void onTextChanged(CharSequence cs, int arg1, int arg2, int arg3) {
+                        // When user changed the Text
+                        ((SimpleAdapter)AndroidXMLParsingActivity.this.getListAdapter()).getFilter().filter(cs);
+
+                    }
+
+                    @Override
+                    public void beforeTextChanged(CharSequence arg0, int arg1, int arg2,
+                                                  int arg3) {
+                        // TODO Auto-generated method stub
+
+
+                    }
+
+                    @Override
+                    public void afterTextChanged(Editable arg0) {
+                        // TODO Auto-generated method stub
+
+                    }
+                });
+
+
             }
         }
 

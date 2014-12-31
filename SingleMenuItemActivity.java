@@ -7,10 +7,10 @@ package com.natiki.xmlparser;
 
 public class SingleMenuItemActivity  extends Activity {
 
-    // XML node keys
+
+    static final String KEY_ID = "id";
     static final String KEY_NAME = "name";
-    static final String KEY_COST = "cost";
-    static final String KEY_DESC = "description";
+    static final String KEY_LAT = "lat";
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -21,16 +21,16 @@ public class SingleMenuItemActivity  extends Activity {
 
         // Get XML values from previous intent
         String name = in.getStringExtra(KEY_NAME);
-        String cost = in.getStringExtra(KEY_COST);
-        String description = in.getStringExtra(KEY_DESC);
+        String idi = in.getStringExtra(KEY_ID);
+        String lat = in.getStringExtra(KEY_LAT);
 
         // Displaying all values on the screen
         TextView lblName = (TextView) findViewById(R.id.name_label);
-        TextView lblCost = (TextView) findViewById(R.id.cost_label);
-        TextView lblDesc = (TextView) findViewById(R.id.description_label);
+        TextView lblCost = (TextView) findViewById(R.id.id_label);
+        TextView lblDesc = (TextView) findViewById(R.id.lat_label);
 
         lblName.setText(name);
-        lblCost.setText(cost);
-        lblDesc.setText(description);
+        lblCost.setText(idi);
+        lblDesc.setText(lat);
     }
 }
