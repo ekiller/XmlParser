@@ -3,6 +3,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 import java.util.HashMap;
+import java.util.Map;
+import java.util.TreeMap;
 
 
 import org.w3c.dom.Document;
@@ -26,6 +28,7 @@ import android.widget.EditText;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
+import android.widget.SimpleCursorAdapter;
 import android.widget.TextView;
 
 public class AndroidXMLParsingActivity extends ListActivity {
@@ -107,6 +110,10 @@ String tst = null;
                         map.put(KEY_ID, tct);
 
                         map.put(KEY_LAT, parser.getValue(e, KEY_LAT));
+
+
+
+
                         menuItems.add(map);
 
 
@@ -118,8 +125,10 @@ String tst = null;
                 Collections.sort(menuItems, new MapComparator(KEY_NAME));
 
 
+
+
 // Adding menuItems to ListView
-                ListAdapter adapter = new SimpleAdapter(AndroidXMLParsingActivity.this, menuItems
+                final ListAdapter adapter = new SimpleAdapter(AndroidXMLParsingActivity.this, menuItems
                         , R.layout.list_item, new String[] { KEY_NAME, KEY_ID, KEY_LAT }
                         , new int[]{R.id.name, R.id.ID, R.id.lat});
 
@@ -127,14 +136,17 @@ String tst = null;
                 // updating listview
                 setListAdapter(adapter);
 
+
                 EditText inputSearch = (EditText) findViewById(R.id.search);
 
                 inputSearch.addTextChangedListener(new TextWatcher() {
 
                     @Override
-                    public void onTextChanged(CharSequence cs, int arg1, int arg2, int arg3) {
+                    public void onTextChanged(CharSequence arg0, int arg1, int arg2, int arg3) {
                         // When user changed the Text
-                        ((SimpleAdapter)AndroidXMLParsingActivity.this.getListAdapter()).getFilter().filter(cs);
+
+                        ((SimpleAdapter)adapter).getFilter().filter(arg0);
+                       // ((SimpleAdapter)AndroidXMLParsingActivity.this.getListAdapter()).getFilter().filter(cs);
 
                     }
 
@@ -149,6 +161,8 @@ String tst = null;
                     @Override
                     public void afterTextChanged(Editable arg0) {
                         // TODO Auto-generated method stub
+
+                        //((SimpleAdapter)adapter).getFilter().filter(arg0);
 
                     }
                 });
